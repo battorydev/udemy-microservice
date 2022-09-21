@@ -27,5 +27,6 @@ public class TwitterToKafkaServiceApplication implements CommandLineRunner {
     public void run(String... args) {
         LOG.info("Hello");
         LOG.info(Arrays.toString(twitterToKafkaServiceConfigData.getTwitterKeywords().toArray(new String[0])));
+        LOG.info(twitterToKafkaServiceConfigData.getWelcomeMessage());
     }
 }

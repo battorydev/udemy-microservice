@@ -68,7 +68,7 @@ public class TwitterV2StreamHelper {
                         .setCookieSpec(CookieSpecs.STANDARD).build())
                 .build();
 
-        URIBuilder uriBuilder = new URIBuilder("https://api.twitter.com/2/tweets/search/stream");
+        URIBuilder uriBuilder = new URIBuilder(twitterToKafkaServiceConfigData.getTwitterV2BaseUrl());
 
         HttpGet httpGet = new HttpGet(uriBuilder.build());
         httpGet.setHeader("Authorization", String.format("Bearer %s", bearerToken));
@@ -80,17 +80,17 @@ public class TwitterV2StreamHelper {
             String line = reader.readLine();
             while (line != null) {
                 line = reader.readLine();
-                if (!line.isEmpty()){
+                if (!line.isEmpty()) {
                     String tweet = getFormattedTweet(line);
                     Status status = null;
 
                     try {
                         status = TwitterObjectFactory.createStatus(tweet);
-                    } catch (TwitterException e){
+                    } catch (TwitterException e) {
                         LOG.error("Could not create status for text: {}", tweet, e);
                     }
 
-                    if (status != null){
+                    if (status != null) {
                         twitterKafkaStatusListener.onStatus(status);
                     }
                 }
@@ -101,7 +101,7 @@ public class TwitterV2StreamHelper {
     /*
      * Helper method to setup rules before streaming data
      * */
-    public static void setupRules(String bearerToken, Map<String, String> rules) throws IOException, URISyntaxException {
+    public void setupRules(String bearerToken, Map<String, String> rules) throws IOException, URISyntaxException {
         List<String> existingRules = getRules(bearerToken);
         if (existingRules.size() > 0) {
             deleteRules(bearerToken, existingRules);
@@ -112,13 +112,13 @@ public class TwitterV2StreamHelper {
     /*
      * Helper method to create rules for filtering
      * */
-    private static void createRules(String bearerToken, Map<String, String> rules) throws URISyntaxException, IOException {
+    private void createRules(String bearerToken, Map<String, String> rules) throws URISyntaxException, IOException {
         HttpClient httpClient = HttpClients.custom()
                 .setDefaultRequestConfig(RequestConfig.custom()
                         .setCookieSpec(CookieSpecs.STANDARD).build())
                 .build();
 
-        URIBuilder uriBuilder = new URIBuilder("https://api.twitter.com/2/tweets/search/stream/rules");
+        URIBuilder uriBuilder = new URIBuilder(twitterToKafkaServiceConfigData.getTwitterV2RulesBaseUrl());
 
         HttpPost httpPost = new HttpPost(uriBuilder.build());
         httpPost.setHeader("Authorization", String.format("Bearer %s", bearerToken));
@@ -135,14 +135,14 @@ public class TwitterV2StreamHelper {
     /*
      * Helper method to get existing rules
      * */
-    private static List<String> getRules(String bearerToken) throws URISyntaxException, IOException {
+    private List<String> getRules(String bearerToken) throws URISyntaxException, IOException {
         List<String> rules = new ArrayList<>();
         HttpClient httpClient = HttpClients.custom()
                 .setDefaultRequestConfig(RequestConfig.custom()
                         .setCookieSpec(CookieSpecs.STANDARD).build())
                 .build();
 
-        URIBuilder uriBuilder = new URIBuilder("https://api.twitter.com/2/tweets/search/stream/rules");
+        URIBuilder uriBuilder = new URIBuilder(twitterToKafkaServiceConfigData.getTwitterV2RulesBaseUrl());
 
         HttpGet httpGet = new HttpGet(uriBuilder.build());
         httpGet.setHeader("Authorization", String.format("Bearer %s", bearerToken));
@@ -165,13 +165,13 @@ public class TwitterV2StreamHelper {
     /*
      * Helper method to delete rules
      * */
-    private static void deleteRules(String bearerToken, List<String> existingRules) throws URISyntaxException, IOException {
+    private void deleteRules(String bearerToken, List<String> existingRules) throws URISyntaxException, IOException {
         HttpClient httpClient = HttpClients.custom()
                 .setDefaultRequestConfig(RequestConfig.custom()
                         .setCookieSpec(CookieSpecs.STANDARD).build())
                 .build();
 
-        URIBuilder uriBuilder = new URIBuilder("https://api.twitter.com/2/tweets/search/stream/rules");
+        URIBuilder uriBuilder = new URIBuilder(twitterToKafkaServiceConfigData.getTwitterV2RulesBaseUrl());
 
         HttpPost httpPost = new HttpPost(uriBuilder.build());
         httpPost.setHeader("Authorization", String.format("Bearer %s", bearerToken));

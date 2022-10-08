@@ -11,6 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>kafka-model</artifactId>
+    <description>Model for kafka. Using Apache avro to generate and serialize the model.</description>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>

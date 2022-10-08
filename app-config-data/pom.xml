@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>app-config-data</artifactId>
+    <description>Module for all configurations in application.</description>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>

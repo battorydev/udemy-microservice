@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: configserver
+  cloud:
+    config:
+      server:
+        # use ssh or http to clone from git remote url for availability and caching (handshake problem?)
+        git:
+          url: file//D:/github/battorydev/udemy-microservice/config-server-repository
+    # stop immediatly if cannot load config
+    fail-fast: true

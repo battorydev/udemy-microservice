@@ -1,6 +1,19 @@
 server:
   port: 8888
 
+spring:
+  application:
+    name: configserver
+  cloud:
+    config:
+      server:
+        # use ssh or http to clone from git remote url for availability and caching (handshake problem?)
+        git:
+          uri: file:///D:/github/battorydev/udemy-microservice/config-server-repository
+          clone-on-start: true
+    # stop immediately if cannot load config
+    fail-fast: true
+
 # override logging level in logback.xml file
 logging:
   level:

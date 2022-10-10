@@ -1,11 +1,16 @@
-spring:
-  application:
-    name: configserver
-  cloud:
-    config:
-      server:
-        # use ssh or http to clone from git remote url for availability and caching (handshake problem?)
-        git:
-          url: file//D:/github/battorydev/udemy-microservice/config-server-repository
-    # stop immediatly if cannot load config
-    fail-fast: true
+# cannot use bootstrap to config spring cloud config server
+# since spring cloud config server 3.x and spring cloud dependencies 2021.x.x
+# https://stackoverflow.com/questions/66690015/invalid-config-server-configuration
+
+#spring:
+#  application:
+#    name: configserver
+#  cloud:
+#    config:
+#      server:
+#        # use ssh or http to clone from git remote url for availability and caching (handshake problem?)
+#        git:
+#          uri: file:///D:/github/battorydev/udemy-microservice/config-server-repository
+#          clone-on-start: true
+#    # stop immediately if cannot load config
+#    fail-fast: true

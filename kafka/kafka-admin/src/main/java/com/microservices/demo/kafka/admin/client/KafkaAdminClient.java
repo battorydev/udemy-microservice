@@ -75,7 +75,7 @@ public class KafkaAdminClient {
         return topics;
     }
 
-    private void checkTopicsCreated() {
+    public void checkTopicsCreated() {
         Collection<TopicListing> topics = getTopics();
         int retryCount = 1;
         Integer maxRetry = retryConfigData.getMaxAttempts();
